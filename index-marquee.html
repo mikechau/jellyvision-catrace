@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Nyan Cat Race</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="javascripts/jquery.min.js"></script>
+</head>
+<body>
+<br /><br /><br /><br />
+  <div id="Poopsie">
+    <marquee id="pcat" align="center" behavior="scroll" direction="right" width="100%" loop="1" scrollamount="0">
+      <img src="images/nyan-cat.gif" alt="Poopsie" height="80">
+    </marquee>
+  </div>
+
+  <div id="Mayonnaise">
+    <marquee id="mcat" align="center" behavior="scroll" direction="right" width="100%" loop="1" scrollamount="0">
+      <img src="images/rasta-nyan-cat.gif" alt="Mayonnaise" height="80">
+    </marquee>
+  </div>
+
+<div id="button-holder">
+  <button id="button-race" type="button" onclick="startRace()">Race!</button>
+  <button id="button-restart" type="button" onClick="window.location.reload()">Restart</button>
+  <a href="index.html"><button id="button-link" type="button">All JQuery Version</button></a>
+  <p class="notice">If you don't see the cats, they are probably offscreen, just click Race!</p>
+</div>
+
+<script>
+  // Get the window size
+  var windowSize = $(window).width();
+
+  // Randomly generate the scrollamount speed
+  var pCatSpeed = Math.ceil(Math.random() * 100);
+  var mCatSpeed = Math.ceil(Math.random() * 100);
+
+  // Alert that states the winner and how fast they were going
+  function announceChamp(champion, speed) {
+    window.alert(champion + ' wins! \n\nSpeed: ' +  speed + ' Pixels\n\nTime: ' + Math.floor(((windowSize/speed)/1000)*1000)/1000 + ' seconds\n\n' + 'Distance: ' + windowSize + ' pixels');
+  }
+
+  // Creates the delay time for setTimeout in milliseconds.
+  function getDelay(catSpeed) {
+    return (windowSize/mCatSpeed) * 100;
+  }
+
+  function startRace() {
+    // Sets the scrollamount, initially it is set to 0 so the cats do not move
+    // but once the button is clicked, the scrollamount is set to a random amount
+    // scrollamount is the amount of pixels moved
+    $("marquee#pcat").attr('scrollamount', pCatSpeed.toString());
+    $("marquee#mcat").attr('scrollamount', mCatSpeed.toString());
+
+    // The winner is calculated by comparing xCatSpeed
+    // setTimeout is called passing in the champion's credentials to
+    // the alert and delay functions
+    $(function() {
+      if (pCatSpeed < mCatSpeed) {
+        setTimeout('announceChamp("Mayonnaise", mCatSpeed)', getDelay(mCatSpeed));
+      }
+      else {
+        setTimeout('announceChamp("Poopsie", pCatSpeed)', getDelay(pCatSpeed));
+      }
+    });
+
+  }
+</script>
+
+
+</body>
+</html>
